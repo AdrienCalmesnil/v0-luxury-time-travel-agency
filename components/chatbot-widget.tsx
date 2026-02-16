@@ -16,65 +16,138 @@ const quickReplies = [
   "Florence et la Renaissance",
 ]
 
-const responses: Record<string, string[]> = {
-  paris: [
-    "Ah, Paris 1889 ! L'une de nos destinations les plus prisees. Imaginez-vous deambulant au pied de la Tour Eiffel, tout juste inauguree pour l'Exposition Universelle. Gustave Eiffel lui-meme pourrait vous faire visiter son appartement au sommet ! La Belle Epoque dans toute sa splendeur, avec les cafes de Montmartre, les premiers spectacles du Moulin Rouge, et une effervescence culturelle incomparable. Je vous recommande notre formule \"Nuit Parisienne\" qui inclut un diner au premier etage de la Tour.",
-    "Paris durant l'Exposition Universelle de 1889, c'est 32 millions de visiteurs venus du monde entier ! Vous pourrez admirer les dernieres innovations technologiques de l'epoque, gouter la cuisine des grands chefs parisiens, et assister a des spectacles qui ont marque l'histoire. Notre forfait inclut des vetements d'epoque sur mesure et un guide bilingue. C'est tout simplement magique !",
-  ],
-  dinosaure: [
-    "Le Cretace, il y a 65 millions d'annees ! C'est notre destination la plus spectaculaire. Vous observerez des Tyrannosaurus Rex dans leur habitat naturel, des troupeaux de Triceratops, et des forets prehistoriques d'une beaute a couper le souffle. Rassurez-vous, nos capsules temporelles sont equipees de champs de protection avances. Vous serez en securite totale tout en vivant l'aventure la plus intense de votre vie !",
-    "Notre safari au Cretace est une experience unique ! Imaginez : des forets de fougeres geantes, des volcans fumants a l'horizon, et les creatures les plus majestueuses ayant jamais foule cette planete. Nos guides paleontologues vous accompagnent dans des vehicules blindes et invisibles. C'est l'aventure ultime pour les amoureux de la nature et de l'histoire de la Terre.",
-  ],
-  florence: [
-    "Florence en 1504, au coeur de la Renaissance italienne ! Vous pourriez croiser Michel-Ange en plein travail sur le David, observer Leonard de Vinci dans son atelier, ou assister a un banquet organise par les Medicis. L'art, l'architecture, la gastronomie toscane... chaque recoin de la ville est un chef-d'oeuvre vivant. Notre formule \"Artiste Florentin\" vous permet meme de participer a un atelier de peinture avec les grands maitres !",
-    "La Florence de la Renaissance, c'est le berceau de l'art occidental ! En 1504, la ville bouillonne de creativite. Vous decouvrirez les fresques en cours de realisation, les debats philosophiques sur les places publiques, et les ateliers des plus grands artistes de l'histoire. Notre forfait premium inclut une rencontre privee avec Laurent de Medicis. Une immersion culturelle sans precedent !",
-  ],
-  destinations: [
-    "Nous proposons actuellement trois destinations extraordinaires :\n\n- Paris 1889 : La Belle Epoque et l'Exposition Universelle, avec la Tour Eiffel toute neuve !\n- Cretace (-65M d'annees) : Un safari prehistorique parmi les dinosaures, dans des forets primordiales.\n- Florence 1504 : Le coeur de la Renaissance italienne, avec Michel-Ange et Leonard de Vinci.\n\nChaque destination offre une immersion complete avec vetements d'epoque, guide specialise et protection temporelle. Laquelle vous tente le plus ?",
-  ],
-  bonjour: [
-    "Bienvenue chez TimeTravel Agency ! C'est un plaisir de vous accueillir. Je suis Chronos, votre guide a travers les epoques. Que vous soyez passionne d'histoire, amateur de sensations fortes ou amoureux de l'art, nous avons la destination temporelle parfaite pour vous. Par ou souhaitez-vous commencer ?",
-  ],
-  prix: [
-    "Nos tarifs dependent de la destination et de la formule choisie. Je vous invite a prendre rendez-vous avec l'un de nos conseillers temporels pour un devis personnalise. Vous pouvez reserver une consultation gratuite via notre section \"Reserver votre voyage\". Sachez que nous proposons egalement des facilites de paiement sur plusieurs dimensions temporelles !",
-  ],
-  securite: [
-    "La securite est notre priorite absolue ! Nos capsules temporelles sont equipees des dernieres technologies de protection : champs d'invisibilite, boucliers energetiques et systeme de retour d'urgence instantane. Chaque voyageur recoit une formation complete avant le depart, et nos guides certifies vous accompagnent a chaque instant. En 15 000 voyages, nous n'avons eu aucun incident. Vous etes entre de bonnes mains !",
-  ],
-  reservation: [
-    "Pour reserver votre voyage temporel, rien de plus simple ! Rendez-vous dans notre section \"Reserver votre voyage\" en bas de page, ou contactez directement l'un de nos conseillers. Nous vous guiderons dans le choix de la destination, de la formule et des options. Un acompte de 30% confirme votre reservation. L'aventure n'attend que vous !",
-  ],
-  comment: [
-    "Excellent question ! Notre technologie de voyage temporel utilise des capsules chronodynamiques de derniere generation. Le processus est simple : vous choisissez votre destination, nous preparons votre immersion (vetements, langue, contexte historique), puis vous embarquez pour un voyage aussi confortable qu'un vol en premiere classe. Le deplacement temporel lui-meme ne dure que quelques secondes de votre temps subjectif !",
-  ],
-}
+function generateChronosResponse(userMessage: string): string {
+  const msg = userMessage.toLowerCase()
 
-function findResponse(input: string): string {
-  const lower = input.toLowerCase()
+  if (
+    msg.includes("destination") ||
+    msg.includes("proposez") ||
+    msg.includes("voyage") ||
+    msg.includes("ou aller") ||
+    msg.includes("où aller") ||
+    msg.includes("quoi visiter")
+  ) {
+    return "Nous proposons trois destinations d'exception !\n\n- Paris 1889 : Vivez l'inauguration de la Tour Eiffel et l'Exposition Universelle, au coeur de la Belle Epoque.\n\n- Cretace -65M : Une expedition au milieu des dinosaures, dans une nature prehistorique a couper le souffle.\n\n- Florence 1504 : Plongez dans la Renaissance italienne, croisez Michel-Ange et admirez la naissance du David.\n\nQuelle epoque vous attire le plus ?"
+  }
 
-  const keywords: [string[], string][] = [
-    [["paris", "1889", "eiffel", "belle epoque", "exposition"], "paris"],
-    [["dinosaure", "cretace", "t-rex", "tyrannosaure", "prehist", "safari", "dino"], "dinosaure"],
-    [["florence", "renaissance", "michel-ange", "michelange", "medici", "vinci", "1504", "itali"], "florence"],
-    [["destination", "proposez", "ou aller", "choix", "catalogue", "quelles"], "destinations"],
-    [["bonjour", "salut", "hello", "coucou", "hey", "bonsoir"], "bonjour"],
-    [["prix", "tarif", "cout", "combien", "cher", "budget"], "prix"],
-    [["securite", "danger", "risque", "sur", "protection", "securise"], "securite"],
-    [["reserver", "reservation", "book", "rendez-vous", "rdv", "inscription"], "reservation"],
-    [["comment", "fonctionne", "marche", "technologie", "capsule", "processus"], "comment"],
-  ]
+  if (
+    msg.includes("paris") ||
+    msg.includes("1889") ||
+    msg.includes("eiffel") ||
+    msg.includes("belle epoque") ||
+    msg.includes("belle époque") ||
+    msg.includes("exposition universelle")
+  ) {
+    return "Ah, Paris 1889... une epoque absolument fascinante ! Vous assisterez a l'inauguration de la Tour Eiffel lors de l'Exposition Universelle. Imaginez : les lumieres de la Ville Lumiere qui s'allument pour la premiere fois a l'electricite, les cafes de Montmartre, l'effervescence artistique... Gustave Eiffel en personne accueille les visiteurs au sommet de sa tour. C'est notre destination la plus romantique. Le forfait inclut une tenue d'epoque et une visite privee de l'Exposition. Souhaitez-vous en savoir plus sur les tarifs ?"
+  }
 
-  for (const [keys, category] of keywords) {
-    if (keys.some((k) => lower.includes(k))) {
-      const options = responses[category]
-      return options[Math.floor(Math.random() * options.length)]
-    }
+  if (
+    msg.includes("dinosaure") ||
+    msg.includes("cretace") ||
+    msg.includes("crétacé") ||
+    msg.includes("t-rex") ||
+    msg.includes("prehisto") ||
+    msg.includes("préhisto") ||
+    msg.includes("jurassic")
+  ) {
+    return "Le Cretace, il y a 65 millions d'annees... notre destination la plus spectaculaire ! Vous observerez des Tyrannosaurus Rex, des Triceratops et des Pteranodons dans leur habitat naturel. La vegetation luxuriante, les volcans a l'horizon, les fougeres geantes... c'est un spectacle inoubliable. Rassurez-vous, nos bulles temporelles garantissent une securite absolue. Vous serez invisible et protege tout au long de l'expedition. C'est l'aventure ultime pour les amoureux de la nature et de la science !"
+  }
+
+  if (
+    msg.includes("florence") ||
+    msg.includes("renaissance") ||
+    msg.includes("1504") ||
+    msg.includes("michel-ange") ||
+    msg.includes("michelangelo") ||
+    msg.includes("medicis") ||
+    msg.includes("médicis") ||
+    msg.includes("italie") ||
+    msg.includes("art")
+  ) {
+    return "Florence 1504, le berceau de la Renaissance ! Vous arriverez au moment precis ou Michel-Ange devoile son David, un chef-d'oeuvre qui va revolutionner l'histoire de l'art. Promenez-vous dans les ateliers des plus grands maitres, admirez le Ponte Vecchio et les palais des Medicis dans toute leur splendeur. Leonard de Vinci travaille encore dans la region a cette epoque... Nos guides locaux, formes a l'etiquette florentine du XVIe siecle, vous accompagnent pour une immersion totale."
+  }
+
+  if (
+    msg.includes("prix") ||
+    msg.includes("tarif") ||
+    msg.includes("cout") ||
+    msg.includes("coût") ||
+    msg.includes("combien") ||
+    msg.includes("reserver") ||
+    msg.includes("réserver") ||
+    msg.includes("booking") ||
+    msg.includes("payer")
+  ) {
+    return "Nos forfaits sont personnalises selon la destination et la duree du sejour temporel. Pour Paris 1889, comptez a partir de 15 000 TC (Temporal Credits). Le Cretace, en raison de la complexite du saut temporel, debute a 25 000 TC. Florence 1504 est disponible des 18 000 TC. Chaque forfait inclut la tenue d'epoque, un guide temporel certifie et notre assurance paradoxe. Souhaitez-vous que je vous oriente vers notre equipe de reservation ?"
+  }
+
+  if (
+    msg.includes("securite") ||
+    msg.includes("sécurité") ||
+    msg.includes("danger") ||
+    msg.includes("risque") ||
+    msg.includes("paradoxe") ||
+    msg.includes("sûr")
+  ) {
+    return "La securite est notre priorite absolue ! Chaque voyageur est protege par une bulle temporelle de derniere generation qui vous rend invisible et intangible dans l'epoque visitee. Aucun risque de paradoxe temporel : notre technologie empeche toute interaction qui pourrait modifier le cours de l'histoire. Nous avons effectue plus de 12 400 voyages sans le moindre incident. Vous pouvez voyager l'esprit tranquille !"
+  }
+
+  if (
+    msg.includes("bonjour") ||
+    msg.includes("salut") ||
+    msg.includes("hello") ||
+    msg.includes("bonsoir") ||
+    msg.includes("coucou")
+  ) {
+    return "Bonjour et bienvenue chez TimeTravel Agency ! Je suis ravi de vous accueillir. Que vous reveniez d'art, d'aventure prehistorique ou d'elegance parisienne, nous avons la destination temporelle parfaite pour vous. Qu'est-ce qui vous ferait rever aujourd'hui ?"
+  }
+
+  if (
+    msg.includes("merci") ||
+    msg.includes("super") ||
+    msg.includes("genial") ||
+    msg.includes("génial") ||
+    msg.includes("parfait") ||
+    msg.includes("excellent")
+  ) {
+    return "Je vous en prie, c'est un plaisir ! N'hesitez pas si vous avez d'autres questions sur nos destinations ou nos services. Le temps est notre specialite, et nous avons tout le temps du monde pour vous aider a trouver le voyage parfait !"
+  }
+
+  if (
+    msg.includes("nature") ||
+    msg.includes("animal") ||
+    msg.includes("aventure") ||
+    msg.includes("science")
+  ) {
+    return "Avec votre gout pour la nature et l'aventure, je vous recommande vivement notre expedition au Cretace ! 65 millions d'annees avant notre ere, la Terre est un veritable paradis naturel. Des forets immenses, une faune spectaculaire et des paysages volcaniques a perte de vue. C'est l'aventure scientifique ultime !"
+  }
+
+  if (
+    msg.includes("culture") ||
+    msg.includes("musee") ||
+    msg.includes("musée") ||
+    msg.includes("peinture") ||
+    msg.includes("sculpture")
+  ) {
+    return "Pour un amateur de culture et d'art, Florence 1504 est une evidence ! Imaginez pouvoir observer Michel-Ange, Leonard de Vinci et Raphael dans leurs ateliers. La Renaissance italienne est le plus grand bouillonnement artistique de l'histoire humaine. Un voyage qui transforme a jamais votre regard sur l'art !"
+  }
+
+  if (
+    msg.includes("romantique") ||
+    msg.includes("couple") ||
+    msg.includes("amour") ||
+    msg.includes("elegance") ||
+    msg.includes("élégance") ||
+    msg.includes("mode") ||
+    msg.includes("gastronomie")
+  ) {
+    return "Pour une experience romantique et elegante, Paris 1889 est la destination ideale ! La Ville Lumiere au sommet de sa splendeur, les grands boulevards, les cafes litteraires, et bien sur, l'inauguration de la Tour Eiffel sous un ciel etoile. C'est le voyage parfait en couple !"
   }
 
   const fallbacks = [
-    "Quelle belle question ! Je serais ravi de vous en dire plus. Pourriez-vous preciser votre demande ? Souhaitez-vous en savoir plus sur l'une de nos destinations (Paris 1889, Cretace, Florence 1504), nos tarifs ou notre technologie de voyage temporel ?",
-    "Je suis passionne par toutes les epoques ! Pour mieux vous orienter, dites-moi : etes-vous plutot attire par l'art et la culture, l'aventure et la nature, ou l'elegance d'une epoque revolue ? Je trouverai la destination ideale pour vous.",
-    "Merci pour votre interet ! Chez TimeTravel Agency, chaque voyage est une experience unique. N'hesitez pas a me poser des questions sur nos trois destinations phares, ou a me decrire le type d'experience qui vous fait rever. Je suis la pour vous guider a travers le temps !",
+    "Quelle belle question ! Pour mieux vous conseiller, pourriez-vous me dire ce qui vous passionne le plus : l'histoire, la nature ou l'art ? Nos trois destinations -- Paris 1889, le Cretace et Florence 1504 -- offrent chacune une experience unique et inoubliable.",
+    "Je serais ravi de vous aider a choisir votre prochaine aventure temporelle ! Etes-vous plutot attire par l'elegance de la Belle Epoque parisienne, les mysteres du monde prehistorique, ou le genie artistique de la Renaissance florentine ?",
+    "Excellente reflexion ! Chez TimeTravel Agency, nous croyons que chaque epoque a quelque chose d'unique a offrir. Dites-moi ce qui vous fait rever et je vous guiderai vers la destination parfaite. Paris 1889, le Cretace ou Florence 1504 ?",
   ]
   return fallbacks[Math.floor(Math.random() * fallbacks.length)]
 }
@@ -91,7 +164,7 @@ export function ChatbotWidget() {
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const msgIdRef = useRef(0)
+  const msgCounter = useRef(0)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -102,7 +175,7 @@ export function ChatbotWidget() {
       if (!text.trim() || isTyping) return
 
       const userMsg: Message = {
-        id: `msg-${++msgIdRef.current}`,
+        id: `user-${++msgCounter.current}`,
         role: "user",
         text: text.trim(),
       }
@@ -110,15 +183,15 @@ export function ChatbotWidget() {
       setInput("")
       setIsTyping(true)
 
-      const delay = 800 + Math.random() * 1200
+      const delay = 600 + Math.random() * 800
       setTimeout(() => {
-        const reply = findResponse(text)
-        const botMsg: Message = {
-          id: `msg-${++msgIdRef.current}`,
+        const response = generateChronosResponse(text)
+        const assistantMsg: Message = {
+          id: `assistant-${++msgCounter.current}`,
           role: "assistant",
-          text: reply,
+          text: response,
         }
-        setMessages((prev) => [...prev, botMsg])
+        setMessages((prev) => [...prev, assistantMsg])
         setIsTyping(false)
       }, delay)
     },
