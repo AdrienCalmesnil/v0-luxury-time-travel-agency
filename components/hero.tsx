@@ -16,15 +16,21 @@ export function Hero() {
       id="accueil"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
-      {/* Background image */}
+      {/* Background image with Ken Burns animation */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/hero-bg.jpg"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-        />
+        <div
+          className={`absolute inset-[-10%] transition-transform duration-[2000ms] ${
+            loaded ? "animate-ken-burns" : "scale-110"
+          }`}
+        >
+          <Image
+            src="/images/hero-bg.jpg"
+            alt=""
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
         <div className="absolute inset-0 bg-background/70" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
       </div>
@@ -108,6 +114,26 @@ export function Hero() {
           25% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
           50% { transform: translateY(-10px) translateX(-5px); opacity: 0.4; }
           75% { transform: translateY(-30px) translateX(15px); opacity: 0.5; }
+        }
+        @keyframes ken-burns {
+          0% {
+            transform: scale(1.1) translate(0%, 0%);
+          }
+          25% {
+            transform: scale(1.18) translate(-1.5%, -1%);
+          }
+          50% {
+            transform: scale(1.14) translate(1%, -0.5%);
+          }
+          75% {
+            transform: scale(1.2) translate(-0.5%, 1%);
+          }
+          100% {
+            transform: scale(1.1) translate(0%, 0%);
+          }
+        }
+        .animate-ken-burns {
+          animation: ken-burns 25s ease-in-out infinite;
         }
       `}</style>
     </section>
